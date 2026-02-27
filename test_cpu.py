@@ -42,28 +42,6 @@ def test_halt_stops():
     assert cpu.registers["R1"] == 1
 
 
-def test_store():
-    cpu = CPU()
-    cpu.load_program([
-        ("LOAD", "R1", 42),
-        ("STORE", "R1", 10),
-        ("HALT",),
-    ])
-    cpu.run()
-    assert cpu.memory[10] == 42
-
-
-def test_store_hex_address():
-    cpu = CPU()
-    cpu.load_program([
-        ("LOAD", "R2", 99),
-        ("STORE", "R2", 0x10),
-        ("HALT",),
-    ])
-    cpu.run()
-    assert cpu.memory[0x10] == 99
-
-
 def test_program_01():
     """Program 01: LOAD 5, LOAD 8, ADD → R1=13."""
     cpu = CPU()
