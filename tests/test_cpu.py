@@ -239,3 +239,14 @@ def test_jle_no_jump_when_greater():
     ])
     cpu.run()
     assert cpu.registers["R1"] == 99
+
+
+def test_jmp():
+    cpu = CPU()
+    cpu.load_program([
+        ("JMP", 2),
+        ("LOAD", "R1", 99),   # skipped
+        ("HALT",),
+    ])
+    cpu.run()
+    assert cpu.registers["R1"] == 0

@@ -33,8 +33,8 @@ def test_program_03_sum_1_to_5():
 
 def test_program_04_multiply():
     cpu = run_program("04-medium-multiply.asm")
-    assert cpu.registers["R3"] == 12
-    assert cpu.memory[0] == 12
+    assert cpu.registers["R3"] == 42
+    assert cpu.memory[0x10] == 42
 
 
 def test_program_05_fibonacci():
