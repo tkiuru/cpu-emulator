@@ -13,4 +13,6 @@ cpu = CPU()
 cpu.load_program(assemble_file(sys.argv[1]))
 cpu.run()
 print("Registers:", cpu.registers)
-print(f"Memory[0x00] = {cpu.memory[0x00]}")
+for addr, val in enumerate(cpu.memory):
+    if val != 0:
+        print(f"Memory[0x{addr:02X}] = {val}")
