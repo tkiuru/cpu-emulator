@@ -83,6 +83,12 @@ class CPU:
                 self.pc = addr
                 return True
 
+        elif op == "JL":
+            addr = instruction[1]
+            if not self.flags["greater"] and not self.flags["equal"]:
+                self.pc = addr
+                return True
+
         elif op == "JMP":
             self.pc = instruction[1]
             return True

@@ -264,3 +264,42 @@ def test_call_ret():
     ])
     cpu.run()
     assert cpu.registers["R1"] == 99
+
+
+def test_jl_jumps_when_less():
+    cpu = CPU()
+    cpu.load_program([
+        ("LOAD", "R1", 3),
+        ("CMP", "R1", 5),
+        ("JL", 4),
+        ("LOAD", "R1", 0),
+        ("HALT",),
+    ])
+    cpu.run()
+    assert cpu.registers["R1"] == 3
+
+
+def test_jl_no_jump_when_equal():
+    cpu = CPU()
+    cpu.load_program([
+        ("LOAD", "R1", 5),
+        ("CMP", "R1", 5),
+        ("JL", 4),
+        ("LOAD", "R1", 99),
+        ("HALT",),
+    ])
+    cpu.run()
+    assert cpu.registers["R1"] == 99
+
+
+def test_jl_no_jump_when_greater():
+    cpu = CPU()
+    cpu.load_program([
+        ("LOAD", "R1", 10),
+        ("CMP", "R1", 5),
+        ("JL", 4),
+        ("LOAD", "R1", 99),
+        ("HALT",),
+    ])
+    cpu.run()
+    assert cpu.registers["R1"] == 99

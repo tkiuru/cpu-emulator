@@ -65,3 +65,9 @@ def test_program_08_factorial():
     cpu = run_program("08-hard-factorial.asm")
     assert cpu.registers["R2"] == 120
     assert cpu.memory[0x10] == 120
+
+
+def test_program_09_division():
+    cpu = run_program("09-hard-division.asm")
+    assert cpu.memory[0x10] == 9    # quotient
+    assert cpu.memory[0x11] == 2    # remainder
