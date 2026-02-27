@@ -45,8 +45,8 @@ def test_program_05_fibonacci():
 
 def test_program_06_max_of_three():
     cpu = run_program("06-medium-max-of-three.asm")
-    assert cpu.registers["R1"] == 7
-    assert cpu.memory[0] == 7
+    assert cpu.registers["R4"] == 42
+    assert cpu.memory[0x10] == 42
 
 
 def test_program_07_array_sum():
