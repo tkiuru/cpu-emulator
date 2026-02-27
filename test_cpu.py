@@ -110,3 +110,69 @@ def test_assemble_hex_values():
     source = "STORE R1, 0xFF"
     instructions = assemble(source)
     assert instructions == [("STORE", "R1", 255)]
+
+
+def test_sub_immediate():
+    cpu = CPU()
+    cpu.load_program([
+        ("LOAD", "R1", 10),
+        ("SUB", "R1", 3),
+        ("HALT",),
+    ])
+    cpu.run()
+    assert cpu.registers["R1"] == 7
+
+
+def test_sub_register():
+    cpu = CPU()
+    cpu.load_program([
+        ("LOAD", "R1", 20),
+        ("LOAD", "R2", 5),
+        ("SUB", "R1", "R2"),
+        ("HALT",),
+    ])
+    cpu.run()
+    assert cpu.registers["R1"] == 15
+
+
+def test_cmp_jne_loops():
+    """SUB and JNE loop: count from 3 down to 0."""
+    cpu = CPU()
+    cpu.load_program([
+        ("LOAD", "R1", 3),   # 0
+        ("SUB", "R1", 1),    # 1
+        ("CMP", "R1", 0),    # 2
+        ("JNE", 1),          # 3 → jump back to SUB
+        ("HALT",),           # 4
+    ])
+    cpu.run()
+    assert cpu.registers["R1"] == 0
+
+
+def test_jne_no_jump_when_equal():
+    cpu = CPU()
+    cpu.load_program([
+        ("LOAD", "R1", 0),
+        ("CMP", "R1", 0),
+        ("JNE", 0),          # should NOT jump, values are equal
+        ("HALT",),
+    ])
+    cpu.run()
+    assert cpu.halted
+
+
+def test_program_02():
+    """Program 02: Count down from 5 to 0."""
+    source = """\
+LOAD R1, 5
+SUB R1, 1
+CMP R1, 0
+JNE 1
+STORE R1, 0x00
+HALT
+"""
+    cpu = CPU()
+    cpu.load_program(assemble(source))
+    cpu.run()
+    assert cpu.registers["R1"] == 0
+    assert cpu.memory[0] == 0
