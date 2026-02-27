@@ -51,8 +51,14 @@ def test_program_06_max_of_three():
 
 def test_program_07_array_sum():
     cpu = run_program("07-medium-array-sum.asm")
-    assert cpu.registers["R1"] == 150
-    assert cpu.memory[0] == 150
+    assert cpu.registers["R1"] == 25
+    assert cpu.memory[0x10] == 25
+
+
+def test_program_07_array_sum_memory():
+    cpu = run_program("07-medium-array-sum-memory.asm")
+    assert cpu.registers["R1"] == 25
+    assert cpu.memory[0x10] == 25
 
 
 def test_program_08_reverse_array():

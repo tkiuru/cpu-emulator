@@ -10,8 +10,13 @@ class CPU:
         self.program = []
         self.flags = {"equal": False, "greater": False}
 
-    def load_program(self, instructions):
-        self.program = instructions
+    def load_program(self, program):
+        if isinstance(program, dict):
+            self.program = program["instructions"]
+            for addr, val in program.get("data", {}).items():
+                self.memory[addr] = val
+        else:
+            self.program = program
         self.pc = 0
         self.halted = False
         self.flags = {"equal": False, "greater": False}
