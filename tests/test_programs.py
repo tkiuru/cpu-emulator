@@ -76,3 +76,8 @@ def test_program_09_division():
 def test_program_10_gcd():
     cpu = run_program("10-hard-gcd.asm")
     assert cpu.memory[0x10] == 6
+
+
+def test_program_11_bubble_sort():
+    cpu = run_program("11-veryhard-bubble-sort.asm")
+    assert cpu.memory[0x20:0x25] == [1, 2, 3, 5, 9]
