@@ -12,7 +12,11 @@ if len(sys.argv) != 2:
 cpu = CPU()
 cpu.load_program(assemble_file(sys.argv[1]))
 cpu.run()
+print(f"Result: Memory[0x10] = {cpu.memory[0x10]}")
+print()
 print("Registers:", cpu.registers)
-for addr, val in enumerate(cpu.memory):
-    if val != 0:
-        print(f"Memory[0x{addr:02X}] = {val}")
+print()
+print("Memory dump:")
+for row in range(0, 256, 16):
+    values = " ".join(f"{cpu.memory[row + i]:02X}" for i in range(16))
+    print(f"  0x{row:02X}: {values}")
