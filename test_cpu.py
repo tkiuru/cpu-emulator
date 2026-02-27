@@ -176,3 +176,22 @@ HALT
     cpu.run()
     assert cpu.registers["R1"] == 0
     assert cpu.memory[0] == 0
+
+
+def test_program_03():
+    """Program 03: Sum 1 to 5 = 15."""
+    source = """\
+LOAD R1, 0
+LOAD R2, 5
+ADD R1, R2
+SUB R2, 1
+CMP R2, 0
+JNE 2
+STORE R1, 0x00
+HALT
+"""
+    cpu = CPU()
+    cpu.load_program(assemble(source))
+    cpu.run()
+    assert cpu.registers["R1"] == 15
+    assert cpu.memory[0] == 15
