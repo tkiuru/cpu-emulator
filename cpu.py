@@ -9,6 +9,7 @@ class CPU:
         self.halted = False
         self.program = []
         self.flags = {"equal": False, "greater": False}
+        self.sp = 0xFF
 
     def load_program(self, program):
         if isinstance(program, dict):
@@ -20,6 +21,7 @@ class CPU:
         self.pc = 0
         self.halted = False
         self.flags = {"equal": False, "greater": False}
+        self.sp = 0xFF
 
     def step(self):
         if self.halted or self.pc >= len(self.program):
@@ -83,6 +85,17 @@ class CPU:
 
         elif op == "JMP":
             self.pc = instruction[1]
+            return True
+
+        elif op == "CALL":
+            self.memory[self.sp] = self.pc + 1
+            self.sp -= 1
+            self.pc = instruction[1]
+            return True
+
+        elif op == "RET":
+            self.sp += 1
+            self.pc = self.memory[self.sp]
             return True
 
         elif op == "STORE":

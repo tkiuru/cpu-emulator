@@ -61,7 +61,7 @@ def test_program_07_array_sum_memory():
     assert cpu.memory[0x10] == 25
 
 
-def test_program_08_reverse_array():
-    cpu = run_program("08-medium-reverse-array.asm")
-    # [5, 3, 8, 1, 4] reversed → [4, 1, 8, 3, 5]
-    assert cpu.memory[0x10:0x15] == [4, 1, 8, 3, 5]
+def test_program_08_factorial():
+    cpu = run_program("08-hard-factorial.asm")
+    assert cpu.registers["R2"] == 120
+    assert cpu.memory[0x10] == 120

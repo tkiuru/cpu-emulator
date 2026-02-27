@@ -250,3 +250,17 @@ def test_jmp():
     ])
     cpu.run()
     assert cpu.registers["R1"] == 0
+
+
+def test_call_ret():
+    cpu = CPU()
+    cpu.load_program([
+        ("LOAD", "R1", 0),    # 0
+        ("CALL", 4),          # 1 → call subroutine at 4
+        ("LOAD", "R1", 99),   # 2 ← returns here
+        ("HALT",),            # 3
+        ("LOAD", "R1", 42),   # 4 (subroutine)
+        ("RET",),             # 5 → back to 2
+    ])
+    cpu.run()
+    assert cpu.registers["R1"] == 99
