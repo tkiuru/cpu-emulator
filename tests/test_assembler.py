@@ -42,3 +42,20 @@ def test_assemble_indirect_register():
     source = "LOAD R1, [R2]"
     instructions = assemble(source)
     assert instructions == [("LOAD", "R1", "[R2]")]
+
+
+def test_assemble_labels():
+    source = """\
+LOAD R1, 5
+LOOP:
+SUB R1, 1
+JNE LOOP
+HALT
+"""
+    instructions = assemble(source)
+    assert instructions == [
+        ("LOAD", "R1", 5),
+        ("SUB", "R1", 1),
+        ("JNE", 1),
+        ("HALT",),
+    ]

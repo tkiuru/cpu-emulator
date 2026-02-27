@@ -161,3 +161,42 @@ def test_store_indirect():
     ])
     cpu.run()
     assert cpu.memory[0x20] == 99
+
+
+def test_jge_jumps_when_greater():
+    cpu = CPU()
+    cpu.load_program([
+        ("LOAD", "R1", 5),
+        ("CMP", "R1", 3),
+        ("JGE", 4),
+        ("LOAD", "R1", 0),
+        ("HALT",),
+    ])
+    cpu.run()
+    assert cpu.registers["R1"] == 5
+
+
+def test_jge_jumps_when_equal():
+    cpu = CPU()
+    cpu.load_program([
+        ("LOAD", "R1", 5),
+        ("CMP", "R1", 5),
+        ("JGE", 4),
+        ("LOAD", "R1", 0),
+        ("HALT",),
+    ])
+    cpu.run()
+    assert cpu.registers["R1"] == 5
+
+
+def test_jge_no_jump_when_less():
+    cpu = CPU()
+    cpu.load_program([
+        ("LOAD", "R1", 3),
+        ("CMP", "R1", 5),
+        ("JGE", 4),
+        ("LOAD", "R1", 99),
+        ("HALT",),
+    ])
+    cpu.run()
+    assert cpu.registers["R1"] == 99

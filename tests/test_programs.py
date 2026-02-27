@@ -21,8 +21,8 @@ def test_program_01_add_two_numbers():
 
 def test_program_02_count_down():
     cpu = run_program("02-easy-count-down.asm")
-    assert cpu.registers["R1"] == 0
-    assert cpu.memory[0] == 0
+    assert cpu.registers["R1"] == -1
+    assert cpu.memory[0x10] == 0
 
 
 def test_program_03_sum_1_to_5():
