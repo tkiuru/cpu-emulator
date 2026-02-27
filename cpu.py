@@ -1,5 +1,14 @@
 """Tiny 8-bit CPU Emulator."""
 
+JUMP_CONDITIONS = {
+    "JNE": lambda f: not f["equal"],
+    "JGT": lambda f: f["greater"],
+    "JGE": lambda f: f["greater"] or f["equal"],
+    "JLE": lambda f: not f["greater"],
+    "JL":  lambda f: not f["greater"] and not f["equal"],
+    "JMP": lambda f: True,
+}
+
 
 class CPU:
     def __init__(self):
@@ -59,39 +68,10 @@ class CPU:
             self.flags["equal"] = left == right
             self.flags["greater"] = left > right
 
-        elif op == "JNE":
-            addr = instruction[1]
-            if not self.flags["equal"]:
-                self.pc = addr
+        elif op in JUMP_CONDITIONS:
+            if JUMP_CONDITIONS[op](self.flags):
+                self.pc = instruction[1]
                 return True
-
-        elif op == "JGT":
-            addr = instruction[1]
-            if self.flags["greater"]:
-                self.pc = addr
-                return True
-
-        elif op == "JGE":
-            addr = instruction[1]
-            if self.flags["greater"] or self.flags["equal"]:
-                self.pc = addr
-                return True
-
-        elif op == "JLE":
-            addr = instruction[1]
-            if not self.flags["greater"]:
-                self.pc = addr
-                return True
-
-        elif op == "JL":
-            addr = instruction[1]
-            if not self.flags["greater"] and not self.flags["equal"]:
-                self.pc = addr
-                return True
-
-        elif op == "JMP":
-            self.pc = instruction[1]
-            return True
 
         elif op == "CALL":
             self.memory[self.sp] = self.pc + 1
