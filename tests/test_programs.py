@@ -16,7 +16,7 @@ def run_program(filename):
 def test_program_01_add_two_numbers():
     cpu = run_program("01-easy-add-two-numbers.asm")
     assert cpu.registers["R1"] == 13
-    assert cpu.memory[0] == 13
+    assert cpu.memory[0x10] == 13
 
 
 def test_program_02_count_down():
