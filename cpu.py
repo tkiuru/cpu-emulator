@@ -3,6 +3,7 @@
 JUMP_CONDITIONS = {
     "JNE": lambda f: not f["equal"],
     "JGT": lambda f: f["greater"],
+    "JG":  lambda f: f["greater"],
     "JGE": lambda f: f["greater"] or f["equal"],
     "JLE": lambda f: not f["greater"],
     "JL":  lambda f: not f["greater"] and not f["equal"],
