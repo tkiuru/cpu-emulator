@@ -195,3 +195,23 @@ HALT
     cpu.run()
     assert cpu.registers["R1"] == 15
     assert cpu.memory[0] == 15
+
+
+def test_program_04():
+    """Program 04: Multiply 3 × 4 = 12."""
+    source = """\
+LOAD R1, 3
+LOAD R2, 4
+LOAD R3, 0
+ADD R3, R1
+SUB R2, 1
+CMP R2, 0
+JNE 3
+STORE R3, 0x00
+HALT
+"""
+    cpu = CPU()
+    cpu.load_program(assemble(source))
+    cpu.run()
+    assert cpu.registers["R3"] == 12
+    assert cpu.memory[0] == 12
