@@ -27,8 +27,8 @@ def test_program_02_count_down():
 
 def test_program_03_sum_1_to_5():
     cpu = run_program("03-easy-sum-1-to-5.asm")
-    assert cpu.registers["R1"] == 15
-    assert cpu.memory[0] == 15
+    assert cpu.registers["R3"] == 15
+    assert cpu.memory[0x10] == 15
 
 
 def test_program_04_multiply():

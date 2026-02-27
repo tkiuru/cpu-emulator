@@ -70,6 +70,12 @@ class CPU:
                 self.pc = addr
                 return True
 
+        elif op == "JLE":
+            addr = instruction[1]
+            if not self.flags["greater"]:
+                self.pc = addr
+                return True
+
         elif op == "STORE":
             reg, dest = instruction[1], instruction[2]
             if isinstance(dest, str) and dest.startswith("["):
