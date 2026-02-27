@@ -3,7 +3,7 @@ from pathlib import Path
 from cpu import CPU
 from assembler import assemble_file
 
-PROGRAMS_DIR = Path(__file__).parent / "programs"
+PROGRAMS_DIR = Path(__file__).parent.parent / "programs"
 
 
 def run_program(filename):
