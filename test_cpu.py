@@ -1,4 +1,5 @@
 from cpu import CPU
+from assembler import assemble
 
 
 def test_load():
@@ -75,3 +76,37 @@ def test_program_01():
     ])
     cpu.run()
     assert cpu.registers["R1"] == 13
+
+
+def test_assemble_add_two_numbers():
+    source = """\
+LOAD R1, 5
+LOAD R2, 8
+ADD R1, R2
+STORE R1, 0x00
+HALT
+"""
+    cpu = CPU()
+    cpu.load_program(assemble(source))
+    cpu.run()
+    assert cpu.registers["R1"] == 13
+    assert cpu.memory[0] == 13
+
+
+def test_assemble_ignores_comments_and_blanks():
+    source = """\
+; this is a comment
+
+LOAD R1, 1   ; inline comment
+
+; another comment
+HALT
+"""
+    instructions = assemble(source)
+    assert instructions == [("LOAD", "R1", 1), ("HALT",)]
+
+
+def test_assemble_hex_values():
+    source = "STORE R1, 0xFF"
+    instructions = assemble(source)
+    assert instructions == [("STORE", "R1", 255)]

@@ -46,16 +46,3 @@ class CPU:
     def run(self):
         while self.step():
             pass
-
-
-# Program 01: add 5 + 8
-if __name__ == "__main__":
-    cpu = CPU()
-    cpu.load_program([
-        ("LOAD", "R1", 5),
-        ("LOAD", "R2", 8),
-        ("ADD", "R1", "R2"),
-        ("HALT",),
-    ])
-    cpu.run()
-    print("Registers:", cpu.registers)
