@@ -4,6 +4,7 @@
 class CPU:
     def __init__(self):
         self.registers = {"R1": 0, "R2": 0, "R3": 0, "R4": 0}
+        self.memory = [0] * 256
         self.pc = 0
         self.halted = False
         self.program = []
@@ -30,6 +31,10 @@ class CPU:
                 self.registers[dest] = self.registers[dest] + src
             else:
                 self.registers[dest] = self.registers[dest] + self.registers[src]
+
+        elif op == "STORE":
+            reg, addr = instruction[1], instruction[2]
+            self.memory[addr] = self.registers[reg]
 
         elif op == "HALT":
             self.halted = True
