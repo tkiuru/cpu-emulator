@@ -39,8 +39,8 @@ def test_program_04_multiply():
 
 def test_program_05_fibonacci():
     cpu = run_program("05-medium-fibonacci.asm")
-    assert cpu.registers["R1"] == 21
-    assert cpu.memory[0] == 21
+    assert cpu.registers["R2"] == 21
+    assert cpu.memory[0x10] == 21
 
 
 def test_program_06_max_of_three():
