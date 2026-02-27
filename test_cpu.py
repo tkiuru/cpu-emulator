@@ -215,3 +215,27 @@ HALT
     cpu.run()
     assert cpu.registers["R3"] == 12
     assert cpu.memory[0] == 12
+
+
+def test_program_05():
+    """Program 05: Fibonacci fib(8) = 21."""
+    source = """\
+LOAD R1, 0
+LOAD R2, 1
+LOAD R3, 8
+LOAD R4, 0
+ADD R4, R2
+ADD R2, R1
+LOAD R1, 0
+ADD R1, R4
+SUB R3, 1
+CMP R3, 0
+JNE 3
+STORE R1, 0x00
+HALT
+"""
+    cpu = CPU()
+    cpu.load_program(assemble(source))
+    cpu.run()
+    assert cpu.registers["R1"] == 21
+    assert cpu.memory[0] == 21
