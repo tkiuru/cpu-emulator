@@ -54,6 +54,12 @@ class CPU:
                 self.pc = addr
                 return True
 
+        elif op == "JGT":
+            addr = instruction[1]
+            if self.flags["greater"]:
+                self.pc = addr
+                return True
+
         elif op == "STORE":
             reg, addr = instruction[1], instruction[2]
             self.memory[addr] = self.registers[reg]

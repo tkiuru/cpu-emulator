@@ -239,3 +239,53 @@ HALT
     cpu.run()
     assert cpu.registers["R1"] == 21
     assert cpu.memory[0] == 21
+
+
+def test_jgt_jumps_when_greater():
+    cpu = CPU()
+    cpu.load_program([
+        ("LOAD", "R1", 10),
+        ("CMP", "R1", 5),
+        ("JGT", 4),          # should jump past the LOAD
+        ("LOAD", "R1", 0),
+        ("HALT",),
+    ])
+    cpu.run()
+    assert cpu.registers["R1"] == 10
+
+
+def test_jgt_no_jump_when_less():
+    cpu = CPU()
+    cpu.load_program([
+        ("LOAD", "R1", 3),
+        ("CMP", "R1", 5),
+        ("JGT", 4),          # should NOT jump
+        ("LOAD", "R1", 99),
+        ("HALT",),
+    ])
+    cpu.run()
+    assert cpu.registers["R1"] == 99
+
+
+def test_program_06():
+    """Program 06: Max of (3, 7, 5) = 7."""
+    source = """\
+LOAD R1, 3
+LOAD R2, 7
+LOAD R3, 5
+CMP R1, R2
+JGT 7
+LOAD R1, 0
+ADD R1, R2
+CMP R1, R3
+JGT 11
+LOAD R1, 0
+ADD R1, R3
+STORE R1, 0x00
+HALT
+"""
+    cpu = CPU()
+    cpu.load_program(assemble(source))
+    cpu.run()
+    assert cpu.registers["R1"] == 7
+    assert cpu.memory[0] == 7
