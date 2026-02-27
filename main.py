@@ -18,5 +18,5 @@ print("Registers:", cpu.registers)
 print()
 print("Memory dump:")
 for row in range(0, 256, 16):
-    values = " ".join(f"{cpu.memory[row + i]:02X}" for i in range(16))
+    values = " ".join(f"{cpu.memory[row + i]:3d}" for i in range(16))
     print(f"  0x{row:02X}: {values}")
