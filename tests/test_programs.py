@@ -53,3 +53,9 @@ def test_program_07_array_sum():
     cpu = run_program("07-medium-array-sum.asm")
     assert cpu.registers["R1"] == 150
     assert cpu.memory[0] == 150
+
+
+def test_program_08_reverse_array():
+    cpu = run_program("08-medium-reverse-array.asm")
+    # [5, 3, 8, 1, 4] reversed → [4, 1, 8, 3, 5]
+    assert cpu.memory[0x10:0x15] == [4, 1, 8, 3, 5]

@@ -65,8 +65,12 @@ class CPU:
                 return True
 
         elif op == "STORE":
-            reg, addr = instruction[1], instruction[2]
-            self.memory[addr] = self.registers[reg]
+            reg, dest = instruction[1], instruction[2]
+            if isinstance(dest, str) and dest.startswith("["):
+                addr_reg = dest[1:-1]
+                self.memory[self.registers[addr_reg]] = self.registers[reg]
+            else:
+                self.memory[dest] = self.registers[reg]
 
         elif op == "HALT":
             self.halted = True

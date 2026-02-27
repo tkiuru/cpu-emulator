@@ -149,3 +149,15 @@ def test_load_indirect():
     ])
     cpu.run()
     assert cpu.registers["R1"] == 42
+
+
+def test_store_indirect():
+    cpu = CPU()
+    cpu.load_program([
+        ("LOAD", "R1", 99),
+        ("LOAD", "R2", 0x20),
+        ("STORE", "R1", "[R2]"),
+        ("HALT",),
+    ])
+    cpu.run()
+    assert cpu.memory[0x20] == 99
