@@ -36,3 +36,9 @@ def test_assemble_hex_values():
     source = "STORE R1, 0xFF"
     instructions = assemble(source)
     assert instructions == [("STORE", "R1", 255)]
+
+
+def test_assemble_indirect_register():
+    source = "LOAD R1, [R2]"
+    instructions = assemble(source)
+    assert instructions == [("LOAD", "R1", "[R2]")]

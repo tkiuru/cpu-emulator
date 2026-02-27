@@ -23,7 +23,9 @@ def assemble(text):
             args = [a.strip() for a in parts[1].split(",")]
             parsed = []
             for arg in args:
-                if arg.upper().startswith("R"):
+                if arg.startswith("[") and arg.endswith("]"):
+                    parsed.append("[" + arg[1:-1].upper() + "]")
+                elif arg.upper().startswith("R"):
                     parsed.append(arg.upper())
                 elif arg.startswith("0x") or arg.startswith("0X"):
                     parsed.append(int(arg, 16))

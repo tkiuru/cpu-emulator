@@ -24,8 +24,12 @@ class CPU:
         op = instruction[0]
 
         if op == "LOAD":
-            reg, value = instruction[1], instruction[2]
-            self.registers[reg] = value
+            reg, src = instruction[1], instruction[2]
+            if isinstance(src, str) and src.startswith("["):
+                addr_reg = src[1:-1]
+                self.registers[reg] = self.memory[self.registers[addr_reg]]
+            else:
+                self.registers[reg] = src
 
         elif op == "ADD":
             dest, src = instruction[1], instruction[2]

@@ -137,3 +137,15 @@ def test_jgt_no_jump_when_less():
     ])
     cpu.run()
     assert cpu.registers["R1"] == 99
+
+
+def test_load_indirect():
+    cpu = CPU()
+    cpu.memory[0x10] = 42
+    cpu.load_program([
+        ("LOAD", "R2", 0x10),
+        ("LOAD", "R1", "[R2]"),
+        ("HALT",),
+    ])
+    cpu.run()
+    assert cpu.registers["R1"] == 42

@@ -47,3 +47,9 @@ def test_program_06_max_of_three():
     cpu = run_program("06-medium-max-of-three.asm")
     assert cpu.registers["R1"] == 7
     assert cpu.memory[0] == 7
+
+
+def test_program_07_array_sum():
+    cpu = run_program("07-medium-array-sum.asm")
+    assert cpu.registers["R1"] == 150
+    assert cpu.memory[0] == 150
