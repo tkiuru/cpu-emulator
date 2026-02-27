@@ -71,3 +71,8 @@ def test_program_09_division():
     cpu = run_program("09-hard-division.asm")
     assert cpu.memory[0x10] == 9    # quotient
     assert cpu.memory[0x11] == 2    # remainder
+
+
+def test_program_10_gcd():
+    cpu = run_program("10-hard-gcd.asm")
+    assert cpu.memory[0x10] == 6
