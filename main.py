@@ -12,8 +12,6 @@ if len(sys.argv) != 2:
 cpu = CPU()
 cpu.load_program(assemble_file(sys.argv[1]))
 cpu.run()
-print(f"Result: Memory[0x10] = {cpu.memory[0x10]}")
-print()
 print("Registers:", cpu.registers)
 print()
 print("Memory dump:")
